@@ -1,0 +1,10 @@
+D:\development\git\flatredball\FlatRedBall-Projects\FirstFlatRedBall\FirstFlatRedBall\FirstFlatRedBall\bin\x86\Debug\redball.BMP
+D:\development\git\flatredball\FlatRedBall-Projects\FirstFlatRedBall\FirstFlatRedBall\FirstFlatRedBall\bin\x86\Debug\FirstFlatRedBall.exe
+D:\development\git\flatredball\FlatRedBall-Projects\FirstFlatRedBall\FirstFlatRedBall\FirstFlatRedBall\bin\x86\Debug\FirstFlatRedBall.pdb
+D:\development\git\flatredball\FlatRedBall-Projects\FirstFlatRedBall\FirstFlatRedBall\FirstFlatRedBall\bin\x86\Debug\FlatRedBall.dll
+D:\development\git\flatredball\FlatRedBall-Projects\FirstFlatRedBall\FirstFlatRedBall\FirstFlatRedBall\bin\x86\Debug\FlatRedBall.xml
+D:\development\git\flatredball\FlatRedBall-Projects\FirstFlatRedBall\FirstFlatRedBall\FirstFlatRedBall\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\development\git\flatredball\FlatRedBall-Projects\FirstFlatRedBall\FirstFlatRedBall\FirstFlatRedBall\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+D:\development\git\flatredball\FlatRedBall-Projects\FirstFlatRedBall\FirstFlatRedBall\FirstFlatRedBall\obj\x86\Debug\FirstFlatRedBall.exe
+D:\development\git\flatredball\FlatRedBall-Projects\FirstFlatRedBall\FirstFlatRedBall\FirstFlatRedBall\obj\x86\Debug\FirstFlatRedBall.pdb
+D:\development\git\flatredball\FlatRedBall-Projects\FirstFlatRedBall\FirstFlatRedBall\FirstFlatRedBall\bin\x86\Debug\Content\Screens\GameScreen\CollectionFile.shcx

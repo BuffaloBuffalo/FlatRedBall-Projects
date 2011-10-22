@@ -1,0 +1,70 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+using FlatRedBall;
+using FlatRedBall.Input;
+using FlatRedBall.AI.Pathfinding;
+using FlatRedBall.Graphics.Animation;
+using FlatRedBall.Graphics.Particle;
+
+using FlatRedBall.Math.Geometry;
+using FlatRedBall.Math.Splines;
+using BitmapFont = FlatRedBall.Graphics.BitmapFont;
+using Cursor = FlatRedBall.Gui.Cursor;
+using GuiManager = FlatRedBall.Gui.GuiManager;
+
+#if FRB_XNA || SILVERLIGHT
+using Keys = Microsoft.Xna.Framework.Input.Keys;
+using Vector3 = Microsoft.Xna.Framework.Vector3;
+using Texture2D = Microsoft.Xna.Framework.Graphics.Texture2D;
+
+
+#endif
+
+namespace FirstFlatRedBall.Entities
+{
+	public partial class PlayerBall
+	{
+        Xbox360GamePad mGamePad;
+        public int PlayerIndex
+        {
+            set
+            {
+                mGamePad = InputManager.Xbox360GamePads[value];
+            }
+        }
+		private void CustomInitialize()
+		{
+            this.PlayerIndex = 0;
+           // this.BodyColor = Microsoft.Xna.Framework.Color.Red;
+
+		}
+
+		private void CustomActivity()
+		{
+            this.updatePosition();
+            
+
+		}
+
+		private void CustomDestroy()
+		{
+
+
+		}
+
+        private static void CustomLoadStaticContent(string contentManagerName)
+        {
+
+
+        }
+
+        private void updatePosition()
+        {
+            mGamePad.ControlPositionedObjectAcceleration(this, MovementSpeed);
+        }
+
+       
+
+	}
+}

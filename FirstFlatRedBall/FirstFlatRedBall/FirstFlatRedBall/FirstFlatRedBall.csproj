@@ -119,6 +119,9 @@
     <Compile Include="Entities\Puck.Generated.cs">
       <DependentUpon>Puck.cs</DependentUpon>
     </Compile>
+    <Compile Include="GlobalContent.Generated.cs" />
+    <Compile Include="Performance\IPoolable.Generated.cs" />
+    <Compile Include="Performance\PoolList.Generated.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />

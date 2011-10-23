@@ -18,19 +18,15 @@ namespace FirstFlatRedBall
 	public static class GlobalContent
 	{
 		
-		public static bool IsInitialized
-		{
-			get;
-			private set;
-		}
+		public static bool IsInitialized { get; private set; }
+		public static bool ShouldStopLoading { get; set; }
 		static string ContentManagerName = "Global";
-		public static void Initialize()
+		public static void Initialize ()
 		{
-
-			IsInitialized = true;
+			
+						IsInitialized = true;
 		}
-
-
-
+		
+		
 	}
 }

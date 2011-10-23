@@ -25,6 +25,8 @@ namespace FirstFlatRedBall.Screens
 {
 	public partial class GameScreen
 	{
+        int mScoreForTeam0 = 0;
+        int mScoreForTeam1 = 0;
 
 		void CustomInitialize()
 		{
@@ -52,8 +54,56 @@ namespace FirstFlatRedBall.Screens
 
         private void CollisionActivity()
         {
+            //wall collisions
             PlayerBallInstance.Body.CollideAgainstBounce(CollectionFile, 0, 1,1);
+            PuckInstance.Body.CollideAgainstBounce(CollectionFile, 0, 1, 1);
+
+            //player->goal
+            PlayerBallInstance.Body.CollideAgainstBounce(GoalAreaFile, 0, 1, 1);
+
+            //player-puck collision
+            PlayerBallInstance.Body.CollideAgainstBounce(PuckInstance.Body, 1, .3f, 1);
+
+            //puck-goal
+            if (PuckInstance.Body.CollideAgainst(LeftGoal))
+            {
+                AssignGoalToTeam(0);
+            }
+            if (PuckInstance.Body.CollideAgainst(RightGoal))
+            {
+                AssignGoalToTeam(1);
+            }
         }
 
+        private void AssignGoalToTeam(int teamIndex)
+        {
+            // Award points to the appropriate team...
+            switch (teamIndex)
+            {
+                case 0:
+                    mScoreForTeam0++;
+                    break;
+                case 1:
+                    mScoreForTeam1++;
+                    break;
+                default:
+                    throw new ArgumentException("Team index must be either 0 or 1");
+                    break;
+            }
+
+            // and move all Entities back to their starting spots:
+            ResetAllPositionsAndStates();
+        }
+
+        private void ResetAllPositionsAndStates()
+        {
+            PlayerBallInstance.Position = PlayerBallInstancePositionReset;
+            PlayerBallInstance.Velocity = Vector3.Zero;
+            PlayerBallInstance.Acceleration = Vector3.Zero;
+
+            PuckInstance.X = 0;
+            PuckInstance.Y = 0;
+            PuckInstance.Velocity = Vector3.Zero;
+        }
 	}
 }

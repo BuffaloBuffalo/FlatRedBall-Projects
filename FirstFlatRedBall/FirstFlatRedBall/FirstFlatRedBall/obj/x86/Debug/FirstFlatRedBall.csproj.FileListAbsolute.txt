@@ -8,3 +8,5 @@ D:\development\git\flatredball\FlatRedBall-Projects\FirstFlatRedBall\FirstFlatRe
 D:\development\git\flatredball\FlatRedBall-Projects\FirstFlatRedBall\FirstFlatRedBall\FirstFlatRedBall\obj\x86\Debug\FirstFlatRedBall.exe
 D:\development\git\flatredball\FlatRedBall-Projects\FirstFlatRedBall\FirstFlatRedBall\FirstFlatRedBall\obj\x86\Debug\FirstFlatRedBall.pdb
 D:\development\git\flatredball\FlatRedBall-Projects\FirstFlatRedBall\FirstFlatRedBall\FirstFlatRedBall\bin\x86\Debug\Content\Screens\GameScreen\CollectionFile.shcx
+D:\development\git\flatredball\FlatRedBall-Projects\FirstFlatRedBall\FirstFlatRedBall\FirstFlatRedBall\bin\x86\Debug\Content\Screens\GameScreen\GoalAreaFile.shcx
+D:\development\git\flatredball\FlatRedBall-Projects\FirstFlatRedBall\FirstFlatRedBall\FirstFlatRedBall\bin\x86\Debug\Content\Entities\ScoreHud\SceneFile.scnx

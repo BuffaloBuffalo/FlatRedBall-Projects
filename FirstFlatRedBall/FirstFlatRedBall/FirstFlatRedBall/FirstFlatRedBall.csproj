@@ -119,6 +119,10 @@
     <Compile Include="Entities\Puck.Generated.cs">
       <DependentUpon>Puck.cs</DependentUpon>
     </Compile>
+    <Compile Include="Entities\ScoreHud.cs" />
+    <Compile Include="Entities\ScoreHud.Generated.cs">
+      <DependentUpon>scorehud.cs</DependentUpon>
+    </Compile>
     <Compile Include="GlobalContent.Generated.cs" />
     <Compile Include="Performance\IPoolable.Generated.cs" />
     <Compile Include="Performance\PoolList.Generated.cs" />

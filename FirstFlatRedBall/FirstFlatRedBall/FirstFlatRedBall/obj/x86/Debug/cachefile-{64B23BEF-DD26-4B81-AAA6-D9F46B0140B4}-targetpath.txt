@@ -1,1 +1,3 @@
+Content\Entities\ScoreHud\SceneFile.scnx
 Content\Screens\GameScreen\CollectionFile.shcx
+Content\Screens\GameScreen\GoalAreaFile.shcx

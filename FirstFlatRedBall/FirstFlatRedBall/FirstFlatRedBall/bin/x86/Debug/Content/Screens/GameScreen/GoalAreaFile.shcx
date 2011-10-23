@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ShapeCollectionSave xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <AxisAlignedRectangleSaves>
+    <AxisAlignedRectangleSave>
+      <X>-23.57</X>
+      <Y>0</Y>
+      <Z>0</Z>
+      <ScaleX>1.4</ScaleX>
+      <ScaleY>4</ScaleY>
+      <Name>Left Goal</Name>
+      <Alpha>1</Alpha>
+      <Red>0.466666669</Red>
+      <Green>1</Green>
+      <Blue>1</Blue>
+    </AxisAlignedRectangleSave>
+    <AxisAlignedRectangleSave>
+      <X>23.7</X>
+      <Y>0</Y>
+      <Z>0</Z>
+      <ScaleX>1.5</ScaleX>
+      <ScaleY>4</ScaleY>
+      <Name>Right Goal</Name>
+      <Alpha>1</Alpha>
+      <Red>0.466666669</Red>
+      <Green>1</Green>
+      <Blue>1</Blue>
+    </AxisAlignedRectangleSave>
+  </AxisAlignedRectangleSaves>
+  <AxisAlignedCubeSaves />
+  <PolygonSaves />
+  <CircleSaves />
+  <SphereSaves />
+</ShapeCollectionSave>

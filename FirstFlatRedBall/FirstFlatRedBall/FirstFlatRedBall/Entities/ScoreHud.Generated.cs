@@ -20,7 +20,6 @@ using FirstFlatRedBall.Entities;
 using FlatRedBall;
 using FlatRedBall.Graphics;
 using FlatRedBall.Math;
-using FlatRedBall.Math.Geometry;
 
 #if XNA4
 using Color = Microsoft.Xna.Framework.Color;
@@ -40,7 +39,7 @@ using Model = Microsoft.Xna.Framework.Graphics.Model;
 
 namespace FirstFlatRedBall.Entities
 {
-	public partial class PlayerBall : PositionedObject, IDestroyable
+	public partial class ScoreHud : PositionedObject, IDestroyable
 	{
         // This is made global so that static lazy-loaded content can access it.
         public static string ContentManagerName
@@ -56,36 +55,18 @@ static bool HasBeenLoadedWithGlobalContentManager = false;
 static object mLockObject = new object();
 static bool mHasRegisteredUnload = false;
 static bool IsStaticContentLoaded = false;
+private static Scene SceneFile;
 
-private Circle mBody;
-public Circle Body
-{
-	get
-	{
-		return mBody;
-	}
-}
-public float MovementSpeed = 50f;
-public Color BodyColor
-{
-	get
-	{
-		return Body.Color;
-	}
-	set
-	{
-		Body.Color = value;
-	}
-}
+private Scene scoreObject;
 protected Layer LayerProvidedByContainer = null;
 
-        public PlayerBall(string contentManagerName) :
+        public ScoreHud(string contentManagerName) :
             this(contentManagerName, true)
         {
         }
 
 
-        public PlayerBall(string contentManagerName, bool addToManagers) :
+        public ScoreHud(string contentManagerName, bool addToManagers) :
 			base()
 		{
 			// Don't delete this:
@@ -98,7 +79,11 @@ protected Layer LayerProvidedByContainer = null;
 		{
 			// Generated Initialize
 			LoadStaticContent(ContentManagerName);
-			mBody = new Circle();
+			scoreObject = SceneFile.Clone();
+			for (int i = 0; i < scoreObject.Texts.Count; i++)
+			{
+				scoreObject.Texts[i].AdjustPositionForPixelPerfectDrawing = true;
+			}
 			
 			PostInitialize();
 			if (addToManagers)
@@ -123,6 +108,7 @@ protected Layer LayerProvidedByContainer = null;
 			// Generated Activity
 			
 			CustomActivity();
+			scoreObject.ManageAll();
 			
 			// After Custom Activity
 		}
@@ -131,9 +117,9 @@ protected Layer LayerProvidedByContainer = null;
 		{
 			// Generated Destroy
 			SpriteManager.RemovePositionedObject(this);
-			if (Body != null)
+			if (scoreObject != null)
 			{
-				ShapeManager.Remove(Body);
+				scoreObject.RemoveFromManagers(ContentManagerName != "Global");
 			}
 			
 
@@ -144,11 +130,6 @@ protected Layer LayerProvidedByContainer = null;
 		// Generated Methods
 public virtual void PostInitialize ()
 {
-	MovementSpeed = 50f;
-	Drag = 1f;
-	X = -10f;
-	Y = 0f;
-	BodyColor = Color.Red;
 }
 public virtual void AddToManagersBottomUp (Layer layerToAddTo)
 {
@@ -167,11 +148,8 @@ public virtual void AddToManagersBottomUp (Layer layerToAddTo)
 	RotationX = 0;
 	RotationY = 0;
 	RotationZ = 0;
-	ShapeManager.AddToLayer(mBody, layerToAddTo);
-	if (mBody.Parent == null)
-	{
-		mBody.AttachTo(this, true);
-	}
+	scoreObject.AddToManagers(layerToAddTo);
+	scoreObject.AttachAllDetachedTo(this, true);
 	X = oldX;
 	Y = oldY;
 	Z = oldZ;
@@ -183,6 +161,7 @@ public virtual void ConvertToManuallyUpdated ()
 {
 	this.ForceUpdateDependenciesDeep();
 	SpriteManager.ConvertToManuallyUpdated(this);
+	scoreObject.ConvertToManuallyUpdated();
 }
 public static void LoadStaticContent (string contentManagerName)
 {
@@ -204,18 +183,23 @@ public static void LoadStaticContent (string contentManagerName)
 		{
 			if (!mHasRegisteredUnload && ContentManagerName != FlatRedBallServices.GlobalContentManager)
 			{
-				FlatRedBallServices.GetContentManagerByName(ContentManagerName).AddUnloadMethod("PlayerBallStaticUnload", UnloadStaticContent);
+				FlatRedBallServices.GetContentManagerByName(ContentManagerName).AddUnloadMethod("ScoreHudStaticUnload", UnloadStaticContent);
 				mHasRegisteredUnload = true;
 			}
 		}
 		bool registerUnload = false;
+		if (!FlatRedBallServices.IsLoaded<Scene>(@"content/entities/scorehud/scenefile.scnx", ContentManagerName))
+		{
+			registerUnload = true;
+		}
+		SceneFile = FlatRedBallServices.Load<Scene>(@"content/entities/scorehud/scenefile.scnx", ContentManagerName);
 		if (registerUnload && ContentManagerName != FlatRedBallServices.GlobalContentManager)
 		{
 			lock (mLockObject)
 			{
 				if (!mHasRegisteredUnload && ContentManagerName != FlatRedBallServices.GlobalContentManager)
 				{
-					FlatRedBallServices.GetContentManagerByName(ContentManagerName).AddUnloadMethod("PlayerBallStaticUnload", UnloadStaticContent);
+					FlatRedBallServices.GetContentManagerByName(ContentManagerName).AddUnloadMethod("ScoreHudStaticUnload", UnloadStaticContent);
 					mHasRegisteredUnload = true;
 				}
 			}
@@ -227,9 +211,26 @@ public static void UnloadStaticContent ()
 {
 	IsStaticContentLoaded = false;
 	mHasRegisteredUnload = false;
+	if (SceneFile != null)
+	{
+		SceneFile.RemoveFromManagers(ContentManagerName != "Global");
+		SceneFile= null;
+	}
+}
+public static object GetStaticMember (string memberName)
+{
+	switch(memberName)
+	{
+		case  "SceneFile":
+			return SceneFile;
+	}
+	return null;
 }
 object GetMember (string memberName)
 {
+	switch(memberName)
+	{
+	}
 	return null;
 }
 
@@ -237,7 +238,7 @@ object GetMember (string memberName)
 	
 	
 	// Extra classes
-	public static class PlayerBallExtensionMethods
+	public static class ScoreHudExtensionMethods
 	{
 	}
 	

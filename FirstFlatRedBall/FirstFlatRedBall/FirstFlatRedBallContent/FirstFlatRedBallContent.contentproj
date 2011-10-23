@@ -48,9 +48,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Entities\ScoreHud\SceneFile.scnx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>SceneFile</Name>
+    </None>
     <None Include="Screens\GameScreen\CollectionFile.shcx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Name>CollectionFile</Name>
+    </None>
+    <None Include="Screens\GameScreen\GoalAreaFile.shcx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>GoalAreaFile</Name>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

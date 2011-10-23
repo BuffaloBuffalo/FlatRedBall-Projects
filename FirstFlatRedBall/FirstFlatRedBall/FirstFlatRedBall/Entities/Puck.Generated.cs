@@ -50,41 +50,44 @@ namespace FirstFlatRedBall.Entities
         }
 
 		// Generated Fields
-		#if DEBUG
-		static bool HasBeenLoadedWithGlobalContentManager = false;
-		#endif
-		static object mLockObject = new object();
-		static bool mHasRegisteredUnload = false;
-		static bool IsStaticContentLoaded = false;
+#if DEBUG
+static bool HasBeenLoadedWithGlobalContentManager = false;
+#endif
+static object mLockObject = new object();
+static bool mHasRegisteredUnload = false;
+static bool IsStaticContentLoaded = false;
 
-		protected Circle mBody;
-		public Circle Body
-		{
-			get{ return mBody;}
-		}
-		public Color BodyColor
-		{
-			get
-			{
-				return Body.Color;
-			}
-			set
-			{
-				Body.Color = value;
-			}
-		}
-		public float BodyRadius
-		{
-			get
-			{
-				return Body.Radius;
-			}
-			set
-			{
-				Body.Radius = value;
-			}
-		}
-		protected Layer LayerProvidedByContainer = null;
+protected Circle mBody;
+public Circle Body
+{
+	get
+	{
+		return mBody;
+	}
+}
+public Color BodyColor
+{
+	get
+	{
+		return Body.Color;
+	}
+	set
+	{
+		Body.Color = value;
+	}
+}
+public float BodyRadius
+{
+	get
+	{
+		return Body.Radius;
+	}
+	set
+	{
+		Body.Radius = value;
+	}
+}
+protected Layer LayerProvidedByContainer = null;
 
         public Puck(string contentManagerName) :
             this(contentManagerName, true)
@@ -106,10 +109,9 @@ namespace FirstFlatRedBall.Entities
 			// Generated Initialize
 			LoadStaticContent(ContentManagerName);
 			mBody = new Circle();
-
-
+			
 			PostInitialize();
-			if(addToManagers)
+			if (addToManagers)
 			{
 				AddToManagers(null);
 			}
@@ -118,131 +120,126 @@ namespace FirstFlatRedBall.Entities
 		}
 
 // Generated AddToManagers
-
-        public virtual void AddToManagers(Layer layerToAddTo)
-        {
+		public virtual void AddToManagers (Layer layerToAddTo)
+		{
 			LayerProvidedByContainer = layerToAddTo;
 			SpriteManager.AddPositionedObject(this);
 			AddToManagersBottomUp(layerToAddTo);
 			CustomInitialize();
-
-        }
+		}
 
 		public virtual void Activity()
 		{
 			// Generated Activity
-
+			
 			CustomActivity();
 			
 			// After Custom Activity
-		
-}
+		}
 
 		public virtual void Destroy()
 		{
 			// Generated Destroy
 			SpriteManager.RemovePositionedObject(this);
-			if(Body != null)
+			if (Body != null)
 			{
 				ShapeManager.Remove(Body);
 			}
-
+			
 
 
 			CustomDestroy();
 		}
 
 		// Generated Methods
-		public virtual void PostInitialize()
+public virtual void PostInitialize ()
+{
+	BodyColor = Color.White;
+	BodyRadius = 0.7f;
+	Drag = 0.45f;
+}
+public virtual void AddToManagersBottomUp (Layer layerToAddTo)
+{
+	// We move this back to the origin and unrotate it so that anything attached to it can just use its absolute position
+	float oldRotationX = RotationX;
+	float oldRotationY = RotationY;
+	float oldRotationZ = RotationZ;
+	
+	float oldX = X;
+	float oldY = Y;
+	float oldZ = Z;
+	
+	X = 0;
+	Y = 0;
+	Z = 0;
+	RotationX = 0;
+	RotationY = 0;
+	RotationZ = 0;
+	ShapeManager.AddToLayer(mBody, layerToAddTo);
+	if (mBody.Parent == null)
+	{
+		mBody.AttachTo(this, true);
+	}
+	X = oldX;
+	Y = oldY;
+	Z = oldZ;
+	RotationX = oldRotationX;
+	RotationY = oldRotationY;
+	RotationZ = oldRotationZ;
+}
+public virtual void ConvertToManuallyUpdated ()
+{
+	this.ForceUpdateDependenciesDeep();
+	SpriteManager.ConvertToManuallyUpdated(this);
+}
+public static void LoadStaticContent (string contentManagerName)
+{
+	ContentManagerName = contentManagerName;
+	#if DEBUG
+	if (contentManagerName == FlatRedBallServices.GlobalContentManager)
+	{
+		HasBeenLoadedWithGlobalContentManager = true;
+	}
+	else if (HasBeenLoadedWithGlobalContentManager)
+	{
+		throw new Exception("This type has been loaded with a Global content manager, then loaded with a non-global.  This can lead to a lot of bugs");
+	}
+	#endif
+	if (IsStaticContentLoaded == false)
+	{
+		IsStaticContentLoaded = true;
+		lock (mLockObject)
 		{
-			BodyColor = Color.White;
-			BodyRadius = 0.5f;
+			if (!mHasRegisteredUnload && ContentManagerName != FlatRedBallServices.GlobalContentManager)
+			{
+				FlatRedBallServices.GetContentManagerByName(ContentManagerName).AddUnloadMethod("PuckStaticUnload", UnloadStaticContent);
+				mHasRegisteredUnload = true;
+			}
 		}
-		public virtual void AddToManagersBottomUp(Layer layerToAddTo)
+		bool registerUnload = false;
+		if (registerUnload && ContentManagerName != FlatRedBallServices.GlobalContentManager)
 		{
-
-
-            // We move this back to the origin and unrotate it so that anything attached to it can just use its absolute position
-            float oldRotationX = RotationX;
-            float oldRotationY = RotationY;
-            float oldRotationZ = RotationZ;
-
-            float oldX = X;
-            float oldY = Y;
-            float oldZ = Z;
-
-            X = 0;
-            Y = 0;
-            Z = 0;
-            RotationX = 0;
-            RotationY = 0;
-            RotationZ = 0;
-			ShapeManager.AddToLayer(mBody, layerToAddTo);
-			if(mBody.Parent == null)
+			lock (mLockObject)
 			{
-				mBody.AttachTo(this, true);
-			}
-
-            X = oldX;
-            Y = oldY;
-            Z = oldZ;
-            RotationX = oldRotationX;
-            RotationY = oldRotationY;
-            RotationZ = oldRotationZ;
-                		}
-		public virtual void ConvertToManuallyUpdated()
-		{
-			this.ForceUpdateDependenciesDeep();
-			SpriteManager.ConvertToManuallyUpdated(this);
-		}
-		public static void LoadStaticContent(string contentManagerName)
-		{
-			ContentManagerName = contentManagerName;
-			#if DEBUG
-			if(contentManagerName == FlatRedBallServices.GlobalContentManager)
-			{
-				HasBeenLoadedWithGlobalContentManager = true;
-			}
-			else if(HasBeenLoadedWithGlobalContentManager)
-			{
-				throw new Exception("This type has been loaded with a Global content manager, then loaded with a non-global.  This can lead to a lot of bugs");
-			}
-			#endif
-			if(IsStaticContentLoaded == false)
-			{
-				IsStaticContentLoaded = true;
-				lock(mLockObject)
+				if (!mHasRegisteredUnload && ContentManagerName != FlatRedBallServices.GlobalContentManager)
 				{
-					if(!mHasRegisteredUnload && ContentManagerName != FlatRedBallServices.GlobalContentManager)
-					{
-						FlatRedBallServices.GetContentManagerByName(ContentManagerName).AddUnloadMethod("PuckStaticUnload", UnloadStaticContent);
-						mHasRegisteredUnload = true;
-					}
-				}
-				bool registerUnload = false;
-			if(registerUnload && ContentManagerName != FlatRedBallServices.GlobalContentManager)
-			{
-				lock(mLockObject)
-				{
-					if(!mHasRegisteredUnload && ContentManagerName != FlatRedBallServices.GlobalContentManager)
-					{
-						FlatRedBallServices.GetContentManagerByName(ContentManagerName).AddUnloadMethod("PuckStaticUnload", UnloadStaticContent);
-						mHasRegisteredUnload = true;
-					}
+					FlatRedBallServices.GetContentManagerByName(ContentManagerName).AddUnloadMethod("PuckStaticUnload", UnloadStaticContent);
+					mHasRegisteredUnload = true;
 				}
 			}
-				CustomLoadStaticContent(contentManagerName);
-			}
 		}
-		public static void UnloadStaticContent()
-		{
-			IsStaticContentLoaded = false;
-			mHasRegisteredUnload = false;
-		}
-		object GetMember(string memberName)
-		{
-			return null;
-		}
+		CustomLoadStaticContent(contentManagerName);
+	}
+}
+public static void UnloadStaticContent ()
+{
+	IsStaticContentLoaded = false;
+	mHasRegisteredUnload = false;
+}
+object GetMember (string memberName)
+{
+	return null;
+}
 
     }
 	

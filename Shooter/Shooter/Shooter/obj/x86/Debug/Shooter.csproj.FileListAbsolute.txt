@@ -1,0 +1,9 @@
+D:\development\git\flatredball\FlatRedBall-Projects\Shooter\Shooter\Shooter\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\development\git\flatredball\FlatRedBall-Projects\Shooter\Shooter\Shooter\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+D:\development\git\flatredball\FlatRedBall-Projects\Shooter\Shooter\Shooter\bin\x86\Debug\redball.BMP
+D:\development\git\flatredball\FlatRedBall-Projects\Shooter\Shooter\Shooter\bin\x86\Debug\Shooter.exe
+D:\development\git\flatredball\FlatRedBall-Projects\Shooter\Shooter\Shooter\bin\x86\Debug\Shooter.pdb
+D:\development\git\flatredball\FlatRedBall-Projects\Shooter\Shooter\Shooter\bin\x86\Debug\FlatRedBall.dll
+D:\development\git\flatredball\FlatRedBall-Projects\Shooter\Shooter\Shooter\bin\x86\Debug\FlatRedBall.xml
+D:\development\git\flatredball\FlatRedBall-Projects\Shooter\Shooter\Shooter\obj\x86\Debug\Shooter.exe
+D:\development\git\flatredball\FlatRedBall-Projects\Shooter\Shooter\Shooter\obj\x86\Debug\Shooter.pdb

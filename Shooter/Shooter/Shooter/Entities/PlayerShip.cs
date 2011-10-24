@@ -19,7 +19,7 @@ namespace Asteroids.Entities
         private Polygon pCollision;
         private PositionedObjectList<AxisAlignedRectangle> mBullets;
         private int numberOfLives = 3;
-
+        private static int MaxBullets= 4;
         public int Lives { get { return numberOfLives; } }
         public Polygon Collision
         {
@@ -39,13 +39,13 @@ namespace Asteroids.Entities
 
         public void Initialize()
         {
-            this.CreateCollision();
+            this.createCollision();
             //base.Initialize();
         }
 
         public void Activity()
         {
-            this.GetKeyboard();
+            this.applyKeyboardInput();
             this.WrapPlayerObjects();
         }
 
@@ -86,7 +86,7 @@ namespace Asteroids.Entities
             numberOfLives = 3;
         }
 
-        private void CreateCollision()
+        private void createCollision()
         {
             // The polygon will be visible by default, so this will serve as both our visible representation
             // as well as collision.
@@ -101,11 +101,11 @@ namespace Asteroids.Entities
             pCollision.AttachTo(this, false);
         }
 
-        private void GetKeyboard()
+        private void applyKeyboardInput()
         {
             if (InputManager.Keyboard.KeyPushed(Keys.Space))
             {
-                if (mBullets.Count < 4)
+                if (mBullets.Count < MaxBullets)
                 {
                     FireShot();
                 }

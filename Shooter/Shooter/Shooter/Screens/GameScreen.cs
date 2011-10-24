@@ -49,20 +49,27 @@ namespace Asteroids.Screens
                 AddToManagers();
             }
 
-            SpriteManager.Camera.UsePixelCoordinates(false);
+            SpriteManager.Camera.UsePixelCoordinates();
 
-            PlayerSprite = new PlayerShip("Player"); //We have a content manager in here for when we will be adding sprites later.
+            //We have a content manager in here for when we will be adding sprites later.
+            PlayerSprite = new PlayerShip("Player");
             //I decided to seperate this for easier reading. This will be called every time the player dies as well later on. That is where the defaults go.
             PlayerSprite.Initialize();
 
-            RockSprites = new Rocks("Rocks"); //We have a content manager in here for when we will be adding spritse later.
+            //We have a content manager in here for when we will be adding spritse later.
+            RockSprites = new Rocks("Rocks");
             //I decided to seperate this for easier reading. This will be called every new level as well later on.
             RockSprites.Initialize(numberOfRocks);
-            NewText();
+
+
+            buildText();
 
 
         }
 
+        /**
+         * Adds to the ScreenManager
+         * */
         public override void AddToManagers()
         {
 
@@ -90,6 +97,7 @@ namespace Asteroids.Screens
 
         public override void Destroy()
         {
+            PlayerSprite.Destroy();
 
             RockSprites.Destroy();
             base.Destroy();
@@ -120,7 +128,7 @@ namespace Asteroids.Screens
                     }
                 }
             }
-
+            //I'm not sure why this logic is separate
             if (HitRock)
             {
                 RockSprites.AsteroidHit(RockHit);
@@ -137,7 +145,7 @@ namespace Asteroids.Screens
 
         private void ShipVsRocks()
         {
-            //going backwards
+            //going backwards because a rock can be removed from the list during iteration
             for (int Rock = RockSprites.Collisions.Count - 1; Rock > -1; Rock--)
             {
                 if (PlayerSprite.Collision.CollideAgainst(RockSprites.Collisions[Rock]))
@@ -151,12 +159,14 @@ namespace Asteroids.Screens
 
         private void KeepTrackOfRocks()
         {
-            if (RockSprites.Collisions.Count < 1)
+            if (RockSprites.Collisions.Count == 0 /*|| RockSprites.Collisions.Count < numberOfRocks-3*/)
             {
                 numberOfRocks++;
                 if (score > 5 * RockSprites.Speed && RockSprites.Speed < 150)
+                {
                     //increase ze speed!
-                    RockSprites.Speed = (int)(RockSprites.Speed * 1.5f);
+                    RockSprites.Speed = (int)(RockSprites.Speed * 2.5f);
+                }
                 RockSprites.Initialize(numberOfRocks);
             }
         }
@@ -168,7 +178,8 @@ namespace Asteroids.Screens
             textLives.DisplayText = " Lives: " + PlayerSprite.Lives;
         }
 
-        private void NewText()
+
+        private void buildText()
         {
             textScore.Scale = 10;
             textScore.Spacing = 10.7f;

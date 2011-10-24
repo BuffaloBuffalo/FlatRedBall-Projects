@@ -73,11 +73,16 @@ namespace Asteroids.Entities
                 //We use the RockSize so they don't go off the edge to begin with.
                 MaxX = MaxX - RockSize;
                 MaxY = MaxY - RockSize;
+                //TODO: This causes a hang if lots of asteroids are created
                 // Give it a location not at the center of the screen
                 while (circle.X < (RockSize * 4) && circle.X > (-RockSize * 4))
+                {
                     circle.X = (float)FlatRedBallServices.Random.NextDouble() * MaxX - (MaxX / 2);
+                }
                 while (circle.Y < (RockSize * 4) && circle.Y > (-RockSize * 4))
+                {
                     circle.Y = (float)FlatRedBallServices.Random.NextDouble() * MaxY - (MaxY / 2);
+                }
                 // Give it a random speed in a random direction
                 float magnitude = (float)FlatRedBallServices.Random.NextDouble() * RockSpeed + 3;
                 float angle = (float)(FlatRedBallServices.Random.NextDouble() * 2 * Math.PI);

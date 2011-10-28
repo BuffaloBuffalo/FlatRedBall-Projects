@@ -40,7 +40,8 @@ namespace Shooter
             //Renderer.UseRenderTargets = false;
 
             FlatRedBallServices.InitializeFlatRedBall(this, graphics);
-            Screens.ScreenManager.Start(typeof(Asteroids.Screens.GameScreen).FullName);
+            //Screens.ScreenManager.Start(typeof(Asteroids.Screens.GameScreen).FullName);
+            Screens.ScreenManager.Start(typeof(Shooter.Screens.TestScreen).FullName);
 
 
             base.Initialize();

@@ -19,8 +19,8 @@ namespace Asteroids.Entities
         // We are going to use circles for the asteroids, for there collisions, for now they will be visiable. Later we add sprites.
         private PositionedObjectList<Circle> mAsteroids;
 
-        private int rockSize=25;
-        private int rockSpeed = 10;
+        private int rockSize = 25;
+        private int rockSpeed = 25;
 
         public int Speed
         {
@@ -62,8 +62,31 @@ namespace Asteroids.Entities
         {
             this.CreateAsteroids((int)SpriteManager.Camera.RelativeXEdgeAt(0) * 2, (int)SpriteManager.Camera.RelativeYEdgeAt(0) * 2, rockSize, rockSpeed, 1);
         }
+
+        public bool notInCenter(float x, float y, int RockSize)
+        {
+            return true;// (x < (RockSize * 4) && x > (-RockSize * 4)) && (y < (RockSize * 4) && y > (-RockSize * 4));
+        }
+
+        public bool notInOtherRocks(Circle circle)
+        {
+            foreach (Circle asteroid in mAsteroids)
+            {
+                if (asteroid.CollideAgainst(circle))
+                {
+                    // Console.WriteLine("avoiding collisions");
+                    return false;
+                }
+            }
+            return true;
+        }
+
         public void CreateAsteroids(int MaxX, int MaxY, int RockSize, int RockSpeed, int NumberOfRocks)
         {
+            MaxX = MaxX - RockSize;
+            MaxY = MaxY - RockSize;
+            int xCalc = (MaxX / 2);
+            int yCalc = (MaxY / 2);
             mAsteroids = new PositionedObjectList<Circle>();
             for (int i = 0; i < NumberOfRocks; i++)
             {
@@ -71,32 +94,58 @@ namespace Asteroids.Entities
                 // Give the circle a size, in pixels. We are using flat screen type for this game, so 1 = 1 pixel.
                 circle.Radius = RockSize;
                 //We use the RockSize so they don't go off the edge to begin with.
-                MaxX = MaxX - RockSize;
-                MaxY = MaxY - RockSize;
+
                 //TODO: This causes a hang if lots of asteroids are created
                 // Give it a location not at the center of the screen
-                while (circle.X < (RockSize * 4) && circle.X > (-RockSize * 4))
+                circle.X = (float)FlatRedBallServices.Random.NextDouble() * MaxX - xCalc;
+                circle.Y = (float)FlatRedBallServices.Random.NextDouble() * MaxY - yCalc;
+                int count = 0;
+                int retries = 10;
+
+                int centerRight = xCalc + 15;
+                int centerLeft = xCalc - 15;
+                int centerTop = yCalc + 15;
+                int centerBottom = yCalc - 15;
+                bool inCenter = (circle.X < centerRight && circle.X > centerLeft && circle.Y > centerBottom && circle.Y < centerTop);
+                while (!inCenter && !notInOtherRocks(circle) && count < retries)
                 {
-                    circle.X = (float)FlatRedBallServices.Random.NextDouble() * MaxX - (MaxX / 2);
+                    circle.X = (float)FlatRedBallServices.Random.NextDouble() * MaxX - xCalc;
+                    circle.Y = (float)FlatRedBallServices.Random.NextDouble() * MaxY - yCalc;
+                    inCenter = (circle.X < centerRight && circle.X > centerLeft && circle.Y > centerBottom && circle.Y < centerTop);
+                    count++;
                 }
-                while (circle.Y < (RockSize * 4) && circle.Y > (-RockSize * 4))
+
+                if (count < retries)
                 {
-                    circle.Y = (float)FlatRedBallServices.Random.NextDouble() * MaxY - (MaxY / 2);
+                    Console.WriteLine("new circle x,y = ({0},{1})", circle.X, circle.Y);
+                    //while (circle.X < (RockSize * 4) && circle.X > (-RockSize * 4))
+                    //{
+                    //    circle.X = (float)FlatRedBallServices.Random.NextDouble() * MaxX - (MaxX / 2);
+                    //}
+                    //while (circle.Y < (RockSize * 4) && circle.Y > (-RockSize * 4))
+                    //{
+                    //    circle.Y = (float)FlatRedBallServices.Random.NextDouble() * MaxY - (MaxY / 2);
+                    //}
+                    // Give it a random speed in a random direction
+                    float magnitude = (float)FlatRedBallServices.Random.NextDouble() * RockSpeed + 3;
+                    float angle = (float)(FlatRedBallServices.Random.NextDouble() * 2 * Math.PI);
+                    //  circle.XVelocity = (float)(Math.Cos(angle) * magnitude);
+                    //   circle.YVelocity = (float)(Math.Sin(angle) * magnitude);
+                    // And add them to the Asteroid List:
+                    mAsteroids.Add(circle);
                 }
-                // Give it a random speed in a random direction
-                float magnitude = (float)FlatRedBallServices.Random.NextDouble() * RockSpeed + 3;
-                float angle = (float)(FlatRedBallServices.Random.NextDouble() * 2 * Math.PI);
-                circle.XVelocity = (float)(Math.Cos(angle) * magnitude);
-                circle.YVelocity = (float)(Math.Sin(angle) * magnitude);
-                // And add them to the Asteroid List:
-                mAsteroids.Add(circle);
+                else
+                {
+                    //we aren't going to use this circle
+                    SpriteManager.RemovePositionedObject(circle);
+                }
             }
         }
 
         public void AsteroidHit(int Rock)
         {
             ShapeManager.Remove(mAsteroids[Rock]);
-            
+
         }
 
         public void updateEachRockActivity()

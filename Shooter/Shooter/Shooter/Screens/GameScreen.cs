@@ -7,6 +7,7 @@ using Asteroids.Entities;
 using FlatRedBall;
 using Shooter.Screens;
 using FlatRedBall.Graphics;
+using FlatRedBall.Math.Geometry;
 
 
 namespace Asteroids.Screens
@@ -16,7 +17,7 @@ namespace Asteroids.Screens
 
         private PlayerShip PlayerSprite;
         private Rocks RockSprites;
-        private int numberOfRocks = 4;
+        private int numberOfRocks = 25;
         private int score;
         private int newLives = 1;
         private Text textScore = TextManager.AddText("");
@@ -88,6 +89,7 @@ namespace Asteroids.Screens
                 ShipVsRocks();
             }
             BulletVsRocks();
+            //CollideRocks();
             RockSprites.Activity();
             KeepTrackOfRocks();
             UpdateText();
@@ -153,6 +155,28 @@ namespace Asteroids.Screens
                     RockSprites.AsteroidHit(Rock);
                     PlayerSprite.Hit();
                     break;
+                }
+            }
+        }
+
+        private void CollideRocks()
+        {
+            for (int outerRockIndex = RockSprites.Collisions.Count - 1; outerRockIndex > -1; outerRockIndex--)
+            {
+                Circle outerRock = RockSprites.Collisions[outerRockIndex];
+                for (int innerRockIndex = outerRockIndex-1; innerRockIndex > -1; innerRockIndex--)
+                {
+                    Circle innerRock = RockSprites.Collisions[innerRockIndex];
+                    if (outerRock.CollideAgainst(innerRock))
+                    {
+
+                        innerRock.XVelocity = -innerRock.XVelocity;
+                        innerRock.YVelocity = -innerRock.YVelocity;
+
+
+                        outerRock.XVelocity = -outerRock.XVelocity;
+                        outerRock.YVelocity = -outerRock.YVelocity;
+                    }
                 }
             }
         }

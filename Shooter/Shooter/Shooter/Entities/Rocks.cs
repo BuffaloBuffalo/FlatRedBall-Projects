@@ -9,8 +9,10 @@ using FlatRedBall.Math.Geometry;
 using FlatRedBall.Content.Polygon;
 using FlatRedBall.Instructions; // for StaticMethodInstruction
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
+using FlatRedBall.Audio;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Asteroids.Entities
 {
@@ -18,7 +20,7 @@ namespace Asteroids.Entities
     {
         // We are going to use circles for the asteroids, for there collisions, for now they will be visiable. Later we add sprites.
         private PositionedObjectList<Circle> mAsteroids;
-
+        private SoundEffect explosionSoundEffect;
         private int rockSize = 25;
         private int rockSpeed = 25;
 
@@ -37,11 +39,17 @@ namespace Asteroids.Entities
         public Rocks(string contentManagerName)
         {
             mAsteroids = new PositionedObjectList<Circle>();
+           
         }
 
         public void Initialize(int numberOfRocks)
         {
+            mAsteroids = new PositionedObjectList<Circle>();
+            explosionSoundEffect = FlatRedBallServices.Game.Content.Load<SoundEffect>("sound/explosion");
             this.CreateAsteroids((int)SpriteManager.Camera.RelativeXEdgeAt(0) * 2, (int)SpriteManager.Camera.RelativeYEdgeAt(0) * 2, rockSize, rockSpeed, numberOfRocks);
+
+
+            
         }
 
         public void Activity()
@@ -87,7 +95,6 @@ namespace Asteroids.Entities
             MaxY = MaxY - RockSize;
             int xCalc = (MaxX / 2);
             int yCalc = (MaxY / 2);
-            mAsteroids = new PositionedObjectList<Circle>();
             for (int i = 0; i < NumberOfRocks; i++)
             {
                 Circle circle = ShapeManager.AddCircle();
@@ -117,20 +124,12 @@ namespace Asteroids.Entities
 
                 if (count < retries)
                 {
-                    Console.WriteLine("new circle x,y = ({0},{1})", circle.X, circle.Y);
-                    //while (circle.X < (RockSize * 4) && circle.X > (-RockSize * 4))
-                    //{
-                    //    circle.X = (float)FlatRedBallServices.Random.NextDouble() * MaxX - (MaxX / 2);
-                    //}
-                    //while (circle.Y < (RockSize * 4) && circle.Y > (-RockSize * 4))
-                    //{
-                    //    circle.Y = (float)FlatRedBallServices.Random.NextDouble() * MaxY - (MaxY / 2);
-                    //}
+                    //Console.WriteLine("new circle x,y = ({0},{1})", circle.X, circle.Y);
                     // Give it a random speed in a random direction
                     float magnitude = (float)FlatRedBallServices.Random.NextDouble() * RockSpeed + 3;
                     float angle = (float)(FlatRedBallServices.Random.NextDouble() * 2 * Math.PI);
-                    //  circle.XVelocity = (float)(Math.Cos(angle) * magnitude);
-                    //   circle.YVelocity = (float)(Math.Sin(angle) * magnitude);
+                    circle.XVelocity = (float)(Math.Cos(angle) * magnitude);
+                    circle.YVelocity = (float)(Math.Sin(angle) * magnitude);
                     // And add them to the Asteroid List:
                     mAsteroids.Add(circle);
                 }
@@ -144,8 +143,8 @@ namespace Asteroids.Entities
 
         public void AsteroidHit(int Rock)
         {
+            explosionSoundEffect.Play();
             ShapeManager.Remove(mAsteroids[Rock]);
-
         }
 
         public void updateEachRockActivity()

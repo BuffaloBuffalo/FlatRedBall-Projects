@@ -1,6 +1,33 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <XnaContent xmlns:Pipeline="Microsoft.Xna.Framework.Content.Pipeline">
   <Asset Type="Pipeline:BuildItemCollection">
+    <Item>
+      <Source>Sound\explosion.wav</Source>
+      <Name>Sound\explosion</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\development\git\flatredball\FlatRedBall-Projects\Shooter\Shooter\Shooter\bin\x86\Debug\Content\Sound\explosion.xnb</Output>
+      <Time>2011-10-29T15:40:36.840374-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Sound\laser.wav</Source>
+      <Name>Sound\laser</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\development\git\flatredball\FlatRedBall-Projects\Shooter\Shooter\Shooter\bin\x86\Debug\Content\Sound\laser.xnb</Output>
+      <Time>2011-10-29T16:11:21.4185606-04:00</Time>
+    </Item>
+    <Item>
+      <Source>Sound\shoot.wav</Source>
+      <Name>Sound\shoot</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\development\git\flatredball\FlatRedBall-Projects\Shooter\Shooter\Shooter\bin\x86\Debug\Content\Sound\shoot.xnb</Output>
+      <Time>2011-10-29T16:11:35.1993488-04:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>
@@ -13,6 +40,38 @@
       <OutputDirectory>D:\development\git\flatredball\FlatRedBall-Projects\Shooter\Shooter\Shooter\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.XImporter.dll</Key>
+        <Value>2010-08-23T12:41:18-04:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.VideoImporters.dll</Key>
+        <Value>2010-08-23T12:41:18-04:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.TextureImporter.dll</Key>
+        <Value>2010-08-23T12:41:18-04:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.FBXImporter.dll</Key>
+        <Value>2010-08-23T12:41:18-04:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.EffectImporter.dll</Key>
+        <Value>2010-08-23T12:41:18-04:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.AudioImporters.dll</Key>
+        <Value>2010-08-23T12:41:18-04:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>D:\development\git\flatredball\FlatRedBall-Projects\Shooter\Shooter\Shooter\Libraries\Xna4Pc\FlatRedBall.dll</Key>
+        <Value>2011-07-12T22:40:40-04:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>D:\development\git\flatredball\FlatRedBall-Projects\Shooter\Shooter\Shooter\Libraries\Xna4Pc\FlatRedBall.Content.dll</Key>
+        <Value>2011-07-12T22:39:20-04:00</Value>
+      </Assembly>
       <Assembly>
         <Key>C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
         <Value>2011-10-20T19:14:26.6680639-04:00</Value>

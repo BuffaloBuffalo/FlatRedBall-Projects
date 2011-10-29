@@ -89,7 +89,7 @@ namespace Asteroids.Screens
                 ShipVsRocks();
             }
             BulletVsRocks();
-            //CollideRocks();
+            CollideRocks();
             RockSprites.Activity();
             KeepTrackOfRocks();
             UpdateText();
@@ -169,13 +169,8 @@ namespace Asteroids.Screens
                     Circle innerRock = RockSprites.Collisions[innerRockIndex];
                     if (outerRock.CollideAgainst(innerRock))
                     {
-
-                        innerRock.XVelocity = -innerRock.XVelocity;
-                        innerRock.YVelocity = -innerRock.YVelocity;
-
-
-                        outerRock.XVelocity = -outerRock.XVelocity;
-                        outerRock.YVelocity = -outerRock.YVelocity;
+                        innerRock.CollideAgainstBounce(outerRock, innerRock.Radius, outerRock.Radius, 1);
+                      
                     }
                 }
             }

@@ -7,3 +7,6 @@ D:\development\git\flatredball\FlatRedBall-Projects\Shooter\Shooter\Shooter\bin\
 D:\development\git\flatredball\FlatRedBall-Projects\Shooter\Shooter\Shooter\bin\x86\Debug\FlatRedBall.xml
 D:\development\git\flatredball\FlatRedBall-Projects\Shooter\Shooter\Shooter\obj\x86\Debug\Shooter.exe
 D:\development\git\flatredball\FlatRedBall-Projects\Shooter\Shooter\Shooter\obj\x86\Debug\Shooter.pdb
+D:\development\git\flatredball\FlatRedBall-Projects\Shooter\Shooter\Shooter\bin\x86\Debug\Content\Sound\explosion.xnb
+D:\development\git\flatredball\FlatRedBall-Projects\Shooter\Shooter\Shooter\bin\x86\Debug\Content\Sound\laser.xnb
+D:\development\git\flatredball\FlatRedBall-Projects\Shooter\Shooter\Shooter\bin\x86\Debug\Content\Sound\shoot.xnb

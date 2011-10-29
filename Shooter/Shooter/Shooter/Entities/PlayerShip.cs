@@ -19,6 +19,7 @@ namespace Asteroids.Entities
         private Polygon pCollision;
         private PositionedObjectList<AxisAlignedRectangle> mBullets;
         private int numberOfLives = 3;
+        private SoundEffect shootSoundEffect;
         private static int MaxBullets= 4;
         public int Lives { get { return numberOfLives; } }
         public Polygon Collision
@@ -40,6 +41,7 @@ namespace Asteroids.Entities
         public void Initialize()
         {
             this.createCollision();
+            shootSoundEffect = FlatRedBallServices.Game.Content.Load<SoundEffect>("sound/shoot");
             //base.Initialize();
         }
 
@@ -171,6 +173,8 @@ namespace Asteroids.Entities
             //This sets the bullet speed.
             newBullet.Velocity = this.RotationMatrix.Right * 650 + (Velocity / 4);
             mBullets.Add(newBullet);
+            shootSoundEffect.Play();
+
         }
 
 
